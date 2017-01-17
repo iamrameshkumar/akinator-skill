@@ -1,0 +1,17 @@
+{
+  "name": "akinator",
+  "version": "1.0.0",
+  "description": "An akinator Alexa app",
+  "main": "index.js",
+  "author": "Sebastian Müller <me@sibbl.net> (http://sibbl.net/)",
+  "license": "MIT",
+  "alexa": {
+    "applicationId": "amzn1.ask.skill.70b982e9-3060-4c01-8825-6954756091e0"
+  },
+  "devDependencies": {
+    "alexa-app": "^2.1.0",
+    "http": "0.0.0",
+    "q": "^1.4.1",
+    "request": "^2.79.0"
+  }
+}

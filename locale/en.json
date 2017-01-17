@@ -1,0 +1,81 @@
+{
+    "responses": {
+        "COULD_NOT_START_GAME": "Unfortunately I couldn't start a game.",
+        "NO_GAME_STARTED": "Unfortunately there's currently no open round. Say \"Alexa, start Akinator\".",
+        "ERROR_SERVER_CONNECTION": "Unfortunately I couldn't communicate with the server.",
+        "HELP": "Say \"Alexa, start Akinator\" to start a new round. Then I'll ask you questions which you can answer with yes, no, don't know, probably and probably not.",
+        "ERROR": "Sorry, something went wrong.",
+        "END_SESSION": "See you soon!",
+        "END_SESSION_CORRECT_RESULT": "I hope you had fun. See you next time!",
+        "ANSWER_FOUND": "My gues is {0}. Am I right or do you want to continue playing?"
+    },
+    "data": {
+        "akinatorApiHost": "http://api-en4.akinator.com/ws/"
+    },
+    "utterances": {
+        "StartGameIntent": [
+            "start",
+            "begin",
+            "new game",
+            "start over",
+            "start over again",
+            "of which person I'm thinking",
+            "of which person I think",
+            "of who I think",
+            "of who I'm thinking",
+            "of what I think",
+            "of what I'm thinking"
+        ],
+        "EndGameIntent": [
+            "exit game",
+            "stop game",
+            "stop",
+            "exit",
+            "break",
+            "cancel"
+        ],
+        "AnswerYesIntent": [
+            "yes",
+            "yep",
+            "sure",
+            "of course",
+            "right",
+            "this's right",
+            "that's right",
+            "this's correct",
+            "that's correct"
+        ],
+        "AnswerNoIntent": [
+            "no",
+            "that's wrong",
+            "that's not correct",
+            "that's not right",
+            "this's wrong",
+            "this's not correct",
+            "this's not right",
+            "nope"
+        ],
+        "AnswerDontKnowIntent": [
+            "don't know",
+            "i don't know",
+            "i've no idea",
+            "no idea",
+            "not sure",
+            "I'm not sure"
+        ],
+        "AnswerMaybeIntent": [
+            "maybe",
+            "probably",
+            "probably yes",
+            "probably correct",
+            "probably right",
+            "could be",
+            "sometimes"
+        ],
+        "AnswerMaybeNotIntent": [
+            "maybe not",
+            "probably not",
+            "probably wrong"
+        ]
+    }
+}

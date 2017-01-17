@@ -1,0 +1,80 @@
+{
+    "responses": {
+        "COULD_NOT_START_GAME": "Leider konnte ich kein Spiel starten.",
+        "NO_GAME_STARTED": "Leider ist momentan kein Spiel gestartet. Sage \"Alexa, starte Akinator\".",
+        "ERROR_SERVER_CONNECTION": "Leider konnte ich das nicht an den Server senden.",
+        "HELP": "Sage \"Alexa, starte Akinator\", um ein neues Spiel zu beginnen. Danach stelle ich dir Fragen, die du entweder mit ja, nein, weiß ich nicht, wahrscheinlich oder wahrscheinlich nicht beantworten kannst.",
+        "ERROR": "Sorry, da ist etwas schief gelaufen.",
+        "END_SESSION": "Bis bald!",
+        "END_SESSION_CORRECT_RESULT": "Ich hoffe es hat dir Spaß gemacht, bis zum nächsten Mal!",
+        "ANSWER_FOUND": "Meine Antwort lautet {0}. Liege ich richtig oder möchtest du weiter spielen?"
+    },
+    "data": {
+        "akinatorApiHost": "http://api-de1.akinator.com/ws/"
+    },
+    "utterances": {
+        "StartGameIntent": [
+            "Start",
+            "beginnen",
+            "neues Spiel",
+            "von vorn",
+            "von vorn beginnen",
+            "neu beginnen",
+            "an welche Person ich denke",
+            "an wen ich denke",
+            "woran ich denke",
+            "an was ich denke"
+        ],
+        "EndGameIntent": [
+            "Spiel beenden",
+            "Stop",
+            "Pause",
+            "aufhören",
+            "abbrechen"
+        ],
+        "AnswerYesIntent": [
+            "Ja",
+            "Jawohl",
+            "Jap",
+            "na klar",
+            "auf jeden Fall",
+            "natürlich",
+            "korrekt",
+            "das ist richtig",
+            "richtig",
+            "du hast recht"
+        ],
+        "AnswerNoIntent": [
+            "nein",
+            "auf keinen Fall",
+            "nope",
+            "nö",
+            "das ist falsch",
+            "falsch",
+            "das ist nicht richtig",
+            "nicht richtig",
+            "du hast nicht recht"
+        ],
+        "AnswerDontKnowIntent": [
+            "ich weiß es nicht",
+            "weiß ich nicht",
+            "keine Ahnung",
+            "das weiß ich nicht",
+            "wenn ich das wüsste"
+        ],
+        "AnswerMaybeIntent": [
+            "vielleicht",
+            "wahrscheinlich",
+            "wahrscheinlich ja",
+            "wohl möglich",
+            "manchmal",
+            "hin und wieder"
+        ],
+        "AnswerMaybeNotIntent": [
+            "vielleicht nicht",
+            "wahrscheinlich nicht",
+            "wahrscheinlich eher nicht",
+            "wahrscheinlich nein"
+        ]
+    }
+}
