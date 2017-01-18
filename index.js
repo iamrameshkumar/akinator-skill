@@ -2,7 +2,7 @@ var alexa = require('alexa-app');
 var akinator = require('./akinator');
 var localization = require('./localization');
 
-// enable the language which you need the generated interaction model:
+// enable the language which you need for the generated interaction model:
 localization.setLocale("en-US");
 // localization.setLocale("de-DE");
 // localization.setLocale("en-GB");

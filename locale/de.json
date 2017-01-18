@@ -21,6 +21,11 @@
             "von vorn beginnen",
             "neu beginnen",
             "an welche Person ich denke",
+            "an welche Person ich gerade denke",
+            "an welche Figur ich denke",
+            "an welche Figur ich gerade denke",
+            "an welches Tier ich denke",
+            "an welches Tier ich gerade denke",
             "an wen ich denke",
             "woran ich denke",
             "an was ich denke"
@@ -53,7 +58,10 @@
             "falsch",
             "das ist nicht richtig",
             "nicht richtig",
-            "du hast nicht recht"
+            "du hast nicht recht",
+            "weiter spielen",
+            "ich möchte weiter spielen",
+            "weiter raten"
         ],
         "AnswerDontKnowIntent": [
             "ich weiß es nicht",
