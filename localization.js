@@ -1,8 +1,3 @@
-var requireUncached = function(module) {
-  delete require.cache[require.resolve(module)];
-  return require(module);
-}
-
 class Localization {
     constructor() {
         this._languageFileMap = {
@@ -24,7 +19,7 @@ class Localization {
         if(!key in this._languageFileMap) {
             throw new Exception("Didn't find language");
         }
-        this._languageDataMap[key] = requireUncached(this._languageFileMap[key]);
+        this._languageDataMap[key] = require(this._languageFileMap[key]);
     }
     translateResponse(key) {
         return this._languageDataMap[this.locale].responses[key];
