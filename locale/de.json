@@ -7,7 +7,7 @@
         "ERROR": "Sorry, da ist etwas schief gelaufen.",
         "END_SESSION": "Bis bald!",
         "END_SESSION_CORRECT_RESULT": "Ich hoffe es hat dir Spaß gemacht, bis zum nächsten Mal!",
-        "ANSWER_FOUND": "Meine Antwort lautet {0}. Liege ich richtig oder möchtest du weiter spielen?"
+        "ANSWER_FOUND": "Meine Antwort lautet {0}. Liege ich richtig? Falls nicht, lass uns weiter spielen."
     },
     "data": {
         "akinatorApiHost": "http://api-de1.akinator.com/ws/"
@@ -83,6 +83,29 @@
             "wahrscheinlich nicht",
             "wahrscheinlich eher nicht",
             "wahrscheinlich nein"
+        ],
+        "RepeatIntent": [
+            "bitte wiederholen",
+            "nochmal ",
+            "wiederholen",
+            "wie bitte",
+            "nochmal bitte",
+            "kannst du das wiederholen",
+            "kannst du das nochmal sagen",
+            "wie war die Frage",
+            "wie lautete die Frage",
+            "was hast du gesagt",
+            "was sagtest du",
+            "ich habe dich nicht verstanden",
+            "ich kann dich nicht verstehen",
+            "ich verstehe nicht",
+            "sage das nochmal",
+            "sage die Frage noch einmal",
+            "sage die Frage nochmal",
+            "sage das nochmal",
+            "sage die Frage erneut",
+            "sage das erneut",
+            "sage das erneut"
         ]
     }
 }

@@ -106,7 +106,7 @@ class Akinator {
     }
     wrongResult(session, signature, step) {
         const defer = q.defer();
-        request(this.baseUrl + "exclude?session=" + session + "&signature=" + signature + "&step=" + step, (error, response, body) => {
+        request(this.baseUrl + "exclusion?session=" + session + "&signature=" + signature + "&step=" + step + "&forward_answer=1", (error, response, body) => {
             return this._getAkinatorQuestionResponse(defer, error, response, body);
         })
         return defer.promise;

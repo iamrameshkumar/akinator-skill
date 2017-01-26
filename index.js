@@ -1,8 +1,8 @@
-var alexa = require('alexa-app');
-var akinator = require('./akinator');
-var localization = require('./localization');
+const alexa = require('alexa-app');
+const akinator = require('./akinator');
+const localization = require('./localization');
 
-// enable the language which you need for the generated interaction model:
+// enable the language which you need the generated interaction model:
 localization.setLocale("en-US");
 // localization.setLocale("de-DE");
 // localization.setLocale("en-GB");
@@ -12,12 +12,13 @@ module.change_code = 1;
 const translate = localization.translateResponse.bind(localization);
 
 const startGame = (request, response) => {
+    clearJustFoundResult(request);
     akinator.start().then(akinatorResponse => { 
         updateSession(akinatorResponse, request, response);
-        response.say(akinatorResponse.question);
+        say(request, response, akinatorResponse.question);
         response.send();
     }, error => {
-        response.fail(translate("COULD_NOT_START_GAME"));
+        fail(request, response, translate("COULD_NOT_START_GAME"));
         response.send();
     });
     return false;  
@@ -71,25 +72,25 @@ const buildCharacterCard = (akinatorCharacterResponse) => {
 const sendAnswer = (request, response, answer) => {
     const state = extractRequestSignature(request);
     if(state === false) {
-        response.fail(translate("COULD_NOT_START_GAME"));
+        fail(request, response, translate("COULD_NOT_START_GAME"));
         response.send();
     }else{
         akinator.sendAnswer(answer, state.session, state.signature, state.step).then(akinatorResponse => {
             speakAnswer(akinatorResponse, state, request, response);
         }, error => {
-            response.fail(translate("ERROR_SERVER_CONNECTION"));
+            fail(request, response, translate("ERROR_SERVER_CONNECTION"));
             response.send();
         });
     }
     return false;
 }
 
-const speakAnswer = (akinatorResponse, state, request, response) => {
+const speakAnswer = (akinatorResponse, state, request, response, doNotCheckAnswer) => {
     updateSession(akinatorResponse, request, response);
-    if(akinatorResponse.isLast) {
+    if(akinatorResponse.isLast && doNotCheckAnswer !== true) {
         sendResult(state, akinatorResponse, request, response);
     }else{
-        response.say(akinatorResponse.question);
+        say(request, response, akinatorResponse.question);
         response.send();
     }
 }
@@ -100,17 +101,18 @@ const sendResult = (state, akinatorResponse, request, response) => {
     akinator.getResult(state.session, state.signature, state.step).then(akinatorResponse => {
         if(akinatorResponse.hasResult) {
             response.card(buildCharacterCard(akinatorResponse));
-            response.say(translate("ANSWER_FOUND").replace("{0}", akinatorResponse.result.name));
+            console.log("Answer: " + akinatorResponse.result.name, new Date().toISOString());
+            say(request, response, translate("ANSWER_FOUND").replace("{0}", akinatorResponse.result.name));
             request.getSession().set("justFoundResult", true); //we store this state as we also want to be able to reply with "yes"
             response.send();
         }else{
             console.log("we checked for results, but couldn't find any...?");
-            response.say(akinatorResponse.question);
+            say(request, response, akinatorResponse.question);
             response.send();
         }
     }, error => {
         console.log("There was an error getting the result", error);
-        response.say(akinatorResponse.question);
+        say(request, response, akinatorResponse.question);
         response.send();
     });
 }
@@ -118,16 +120,16 @@ const sendResult = (state, akinatorResponse, request, response) => {
 const correctResult = (request, response) => {
     const state = extractRequestSignature(request);
     if(state === false) {
-        response.fail(translate("COULD_NOT_START_GAME"));
+        fail(request, response, translate("COULD_NOT_START_GAME"));
         response.send();
     }else{
         akinator.correctResult(state.session, state.signature, state.step).then(akinatorResponse => {
-            var session = request.getSession();
+            const session = request.getSession();
             session.clear();
-            response.say(translate("END_SESSION_CORRECT_RESULT"));
+            say(request, response, translate("END_SESSION_CORRECT_RESULT"));
             response.send();
         }, error => {
-            response.fail(translate("ERROR_SERVER_CONNECTION"));
+            fail(request, response, translate("ERROR_SERVER_CONNECTION"));
             response.send();
         });
     }
@@ -137,13 +139,13 @@ const correctResult = (request, response) => {
 const wrongResult = (request, response) => {
     const state = extractRequestSignature(request);
     if(state === false) {
-        response.fail(translate("COULD_NOT_START_GAME"));
+        fail(request, response, translate("COULD_NOT_START_GAME"));
         response.send();
     }else{
         akinator.wrongResult(state.session, state.signature, state.step).then(akinatorResponse => {
-            speakAnswer(akinatorResponse, state, request, response);
+            speakAnswer(akinatorResponse, state, request, response, true);
         }, error => {
-            response.fail(translate("ERROR_SERVER_CONNECTION"));
+            fail(request, response, translate("ERROR_SERVER_CONNECTION"));
             response.send();
         });
     }
@@ -151,10 +153,21 @@ const wrongResult = (request, response) => {
 }
 
 const endGame = (request, response) => {
-    var session = request.getSession();
+    const session = request.getSession();
     session.clear();
-    response.say(translate("END_SESSION"));
+    say(request, response, translate("END_SESSION"));
 };
+
+const repeat = (request, response) => {
+    const session = request.getSession();
+    const lastMessage = session.get("lastMessage");
+    if(lastMessage === undefined) {
+        say(request, response, translate("ERROR"));
+    }else{
+        say(request, response, lastMessage);
+    }
+    response.shouldEndSession(false);
+}
 
 const buildIntentDescription = (intent) => {
     return {
@@ -163,7 +176,21 @@ const buildIntentDescription = (intent) => {
     };
 }
 
-var app = new alexa.app("akinator");
+const say = (request, response, text) => {
+    const session = request.getSession();
+    session.set("lastMessage", text);
+    response.say(text);
+}
+const fail = (request, response, text) => {
+    const session = request.getSession();
+    session.set("lastMessage", text);
+    response.fail(text);
+}
+const clearJustFoundResult = (request) => {
+    request.getSession().clear("justFoundResult");
+}
+
+const app = new alexa.app("akinator");
 
 app.pre = (request, response, type) => {
     localization.setLocale(request.data.request.locale);
@@ -173,7 +200,7 @@ app.launch(startGame);
 app.intent("StartGameIntent", buildIntentDescription("StartGameIntent"), startGame);
 app.intent("AnswerYesIntent", buildIntentDescription("AnswerYesIntent"), (request, response) => {
     if(request.getSession().get("justFoundResult") === true) {
-        request.getSession().clear("justFoundResult");
+        clearJustFoundResult(request);
         return correctResult(request, response);
     }else{
         return sendAnswer(request, response, 0);
@@ -191,19 +218,20 @@ app.intent("AnswerDontKnowIntent", buildIntentDescription("AnswerDontKnowIntent"
 app.intent("AnswerMaybeIntent", buildIntentDescription("AnswerMaybeIntent"), (request, response) => sendAnswer(request, response, 3));
 app.intent("AnswerMaybeNotIntent", buildIntentDescription("AnswerMaybeNotIntent"), (request, response) => sendAnswer(request, response, 4));
 app.intent("EndGameIntent", buildIntentDescription("EndGameIntent"), endGame);
+app.intent("RepeatIntent", buildIntentDescription("RepeatIntent"), repeat);
 app.intent("AMAZON.HelpIntent", (request, response) => {
-    response.say(translate("HELP"));
+    say(request, response, translate("HELP"));
 })
 
 app.error = (exception, request, response) => {
     console.log("global error", exception);
-    response.say(translate("ERROR"));
+    say(request, response, translate("ERROR"));
     throw exception;
 };
 
 app.sessionEnded((request, response) => {
-    console.log("session ended");
-    var session = request.getSession();
+    console.log("session ended", new Date().toISOString());
+    const session = request.getSession();
     session.clear();
 });
 

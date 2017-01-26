@@ -7,7 +7,7 @@
         "ERROR": "Sorry, something went wrong.",
         "END_SESSION": "See you soon!",
         "END_SESSION_CORRECT_RESULT": "I hope you had fun. See you next time!",
-        "ANSWER_FOUND": "My gues is {0}. Am I right or do you want to continue playing?"
+        "ANSWER_FOUND": "My guess is {0}. Am I right or do you want to continue playing?"
     },
     "data": {
         "akinatorApiHost": "http://api-en4.akinator.com/ws/"
@@ -76,6 +76,34 @@
             "maybe not",
             "probably not",
             "probably wrong"
+        ],
+        "RepeatIntent": [
+            "repeat",
+            "please repeat",
+            "repeat please",
+            "pardon",
+            "sorry, I didn't get this",
+            "I didn't get this",
+            "sorry, I didn't get that",
+            "I didn't get that",
+            "sorry, I didn't understand",
+            "I didn't understand",
+            "repeat that",
+            "repeat that please",
+            "please repeat that",
+            "repeat this",
+            "repeat this please",
+            "please repeat this",
+            "say this again",
+            "please say this again",
+            "say this again please",
+            "say that again",
+            "please say that again",
+            "say that again please",
+            "say it again",
+            "please say it again",
+            "say it again please",
+            "what"
         ]
     }
 }
